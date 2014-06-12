@@ -2,3 +2,9 @@
 table, td {
 	border: 1px solid black;
 }
+
+#sview {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	width: 640px;
+}
