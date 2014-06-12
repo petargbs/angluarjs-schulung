@@ -20,4 +20,8 @@ myApp
                 nachname: nachname
             });
         };
+        $scope.remove = function(person) {
+            var idx = $scope.Persons.indexOf(person);
+            $scope.Persons.splice(idx, 1);
+        };
     });
