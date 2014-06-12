@@ -2,14 +2,34 @@
 <html data-ng-app="myApp">
     <head>
         <title>Demo 01</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
         <script src="lib/angular.min.js"></script>
         <script src="js/app.js"></script>
     </head>
     <body>
         <div data-ng-controller="main">
-            <input type="text" data-ng-model="vorname" />
-            <button data-ng-click="show()">Click Me!</button>
-            <p>{{vorname}}</p>
+            Vorname: <input type="text" data-ng-model="vorname" />
+            <br/>
+            Nachname: <input type="text" data-ng-model="nachname" />
+            <br />
+            <button data-ng-click="add(vorname, nachname)">Add Person</button>
+            
+<!--             <br>
+            <button data-ng-click="show(nachname)">Show Name</button>
+            <br>
+            <button data-ng-click="show2(nachname)">Show Nachname</button>
+ -->
+            <br>
+            <br>
+
+            <table data-ng-repeat="person in Persons">
+                <tr>
+                    <td>{{person.id}}</td>
+                    <td>{{person.vorname}}</td>
+                    <td>{{person.nachname}}</td>
+                </tr>
+            </table>
+            <p>{{Persons.length}} total.</p>
         </div>
     </body>
 </html>
