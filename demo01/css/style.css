@@ -1,6 +1,7 @@
 
-table, td {
+ td {
 	border: 1px solid black;
+	min-width: 80px;
 }
 
 #sview {

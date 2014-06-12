@@ -14,17 +14,22 @@ myApp
             alert(name);
         };
         $scope.add = function(vorname, nachname) {
-            $scope.Persons.push({
-                id: $scope.Persons.length + 1,
-                vorname: vorname,
-                nachname: nachname,
-                editable: false
-            });
-            $scope.serialized = JSON.stringify($scope.Persons);
+            if (vorname && nachname && vorname.length && nachname.length) {
+                $scope.Persons.push({
+                    id: $scope.Persons.length + 1,
+                    vorname: vorname,
+                    nachname: nachname,
+                    editable: false
+                });
+                $scope.serialized = JSON.stringify($scope.Persons);
+            }
         };
         $scope.remove = function(person) {
             var idx = $scope.Persons.indexOf(person);
-            $scope.Persons.splice(idx, 1);
+            if (idx > 0) {
+                $scope.Persons.splice(idx, 1);
+                $scope.serialized = JSON.stringify($scope.Persons);
+            }
         };
         $scope.rename = function(person, vorname, nachname) {
             var idx = $scope.Persons.indexOf(person);
