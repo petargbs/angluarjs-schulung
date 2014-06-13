@@ -104,7 +104,7 @@ angular
         /*
             Remove single person object from server and local array
         */
-        $scope.remove = function(person){
+        $scope.remove = function(person) {
             // remove from server storage
             $http.delete('/persons/' + person.id)
             .success(function(data) {
