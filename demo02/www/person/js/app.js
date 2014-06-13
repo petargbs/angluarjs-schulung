@@ -32,9 +32,6 @@ angular
     }])
     .controller('Main', function($scope){
         $scope.Breadcrumbs = [];
-        $scope.Persons = [];
-        $scope.ErrorMessage = '';
-
         $scope.$on('bc_route_changed', function(e, args) {
             if (!args)
                 return;
@@ -44,6 +41,16 @@ angular
                 'uri': args.uri
             });
         });
+    })
+    .controller('Imprint', function($scope){
+
+    })
+    .controller('Info', function($scope){
+
+    })
+    .controller('Details', function($scope){
+        $scope.Persons = [];
+        $scope.ErrorMessage = '';
 
         $scope.add = function(vorname, nachname){
             if(!vorname) return $scope.ErrorMessage = 'Enter a "vorname", please!';
@@ -63,15 +70,9 @@ angular
             alert(JSON.stringify($scope.Persons));
         };
 
-        $scope.sync = function(){
-
-        };
-
-    })
-    .controller('Imprint', function($scope){
-
-    })
-    .controller('Info', function($scope){
+        $scope.add('Max', 'Mustermann 01');
+        $scope.add('Max', 'Mustermann 02');
+        $scope.add('Max', 'Mustermann 03');
 
     })
     .run(function($rootScope) {
