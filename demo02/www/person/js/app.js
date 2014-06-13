@@ -36,11 +36,12 @@ angular
         $scope.ErrorMessage = '';
 
         $scope.$on('bc_route_changed', function(e, args) {
-            if (!args.args)
+            if (!args)
                 return;
-            var n = args.args !== '/' ? args.args.replace(/\//,'') : args.args;
+            var n = args.name !== '/' ? args.name.replace(/\//,'') : args.name;
             $scope.Breadcrumbs.push({
-                'link': n
+                'name': n,
+                'uri': args.uri
             });
         });
 
@@ -75,9 +76,10 @@ angular
     })
     .run(function($rootScope) {
         $rootScope.$on('$routeChangeStart', function(e, args) {
-            // console.log(args);
+            console.log(args);
             $rootScope.$broadcast('bc_route_changed', { 
-                args: args.$$route.originalPath
+                name: args.$$route.originalPath,
+                uri: args.$$route.originalPath
             });
         });
     });
