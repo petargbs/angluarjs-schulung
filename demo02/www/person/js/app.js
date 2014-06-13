@@ -10,8 +10,11 @@ angular
 	.config(['$routeProvider','$locationProvider',function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'templates/info.html',
-                controller: 'Main'
+            	redirectTo: '/welcome'
+            })
+            .when('/welcome', {
+                templateUrl: 'templates/welcome.html',
+                controller: 'Info'
             })
             .when('/info', {
                 templateUrl: 'templates/info.html',
@@ -22,7 +25,7 @@ angular
                 controller: 'Imprint'
             })
             .when('/404', { templateUrl: 'templates/404.html' })
-        .otherwise( { redirectTo: '/404' });
+        .otherwise({ redirectTo: '/404' });
 
        $locationProvider.html5Mode(false);
     }])
