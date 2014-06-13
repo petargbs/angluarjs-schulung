@@ -1,17 +1,17 @@
 var Person = function(vorname, nachname){
-	return {
-		Vorname: vorname,
-		Nachname: nachname
-	};
+    return {
+        Vorname: vorname,
+        Nachname: nachname
+    };
 };
 
 angular
-	.module('myApp', ['ngRoute'])
-	.config(['$routeProvider','$locationProvider',function($routeProvider, $locationProvider) {
+    .module('myApp', ['ngRoute'])
+    .config(['$routeProvider','$locationProvider',function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
-            	// default route
-            	redirectTo: '/welcome'
+                // default route
+                redirectTo: '/welcome'
             })
             .when('/welcome', {
                 templateUrl: 'templates/welcome.html',
@@ -30,38 +30,45 @@ angular
 
        $locationProvider.html5Mode(false);
     }])
-	.controller('Main', function($scope){
-		$scope.Persons = [];
-		$scope.ErrorMessage = '';
+    .controller('Main', function($scope){
+        $scope.$on('helloworld', function(e, args) {
+            console.log(args);
+        });
 
-		$scope.add = function(vorname, nachname){
-			if(!vorname) return $scope.ErrorMessage = 'Enter a "vorname", please!';
-			
-			$scope.Persons.push(Person(vorname, nachname));
-			$scope.ErrorMessage = '';
-		};
-		$scope.changed = function(person){
-			console.log(person);
-		};
-		$scope.remove = function(person){
-			var idx = $scope.Persons.indexOf(person);
-			$scope.Persons.splice(idx, 1);
-		};
+        $scope.Persons = [];
+        $scope.ErrorMessage = '';
 
-		$scope.showPersons = function(){
-			alert(JSON.stringify($scope.Persons));
-		};
+        $scope.add = function(vorname, nachname){
+            if(!vorname) return $scope.ErrorMessage = 'Enter a "vorname", please!';
+            
+            $scope.Persons.push(Person(vorname, nachname));
+            $scope.ErrorMessage = '';
+        };
+        $scope.changed = function(person){
+            console.log(person);
+        };
+        $scope.remove = function(person){
+            var idx = $scope.Persons.indexOf(person);
+            $scope.Persons.splice(idx, 1);
+        };
 
-		$scope.sync = function(){
+        $scope.showPersons = function(){
+            alert(JSON.stringify($scope.Persons));
+        };
 
-		};
+        $scope.sync = function(){
 
-	})
-	.controller('Imprint', function($scope){
+        };
 
-	})
-	.controller('Info', function($scope){
+    })
+    .controller('Imprint', function($scope){
 
-	});
+    })
+    .controller('Info', function($scope){
 
-
+    })
+    .run(function($rootScope) {
+        $rootScope.$on('$routeChangeStart', function(e, args) {
+            $rootScope.$broadcast('helloworld', {foo: 'bar', args: args});
+        });
+    });
