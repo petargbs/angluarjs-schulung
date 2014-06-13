@@ -22,7 +22,7 @@
 			<br/>
 			Filter: <input type="text" data-ng-model="query">
 			<br/>
-			Liimit: <input type="range" min="1" max="10" data-ng-model="number" data-ng-init="number=3">
+			Liimit: <input type="range" min="1" max="10" data-ng-model="number" data-ng-init="number=8">
 			<br/>
 
 			<table>
@@ -34,7 +34,7 @@
 			</table>
 			<p>{{ErrorMessage}}</p>
 			<p>Number of Persons: {{Persons.length}}</p>
-			<button data-ng-click="showPersons()">show all persons</button>
+			<button data-ng-click="sync()">Sync Persons</button>
 		</div>
 	</body>
 </html>

@@ -1,3 +1,6 @@
+/*
+    Create new person object
+*/
 var Person = function(vorname, nachname){
     return {
         Vorname: vorname,
@@ -5,8 +8,15 @@ var Person = function(vorname, nachname){
     };
 };
 
+/*
+    Configure Angular
+*/
 angular
     .module('myApp', ['ngRoute'])
+    /*
+        Configure accessible routes
+        These will be accessed from browser
+    */
     .config(['$routeProvider','$locationProvider',function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
@@ -30,6 +40,11 @@ angular
 
        $locationProvider.html5Mode(false);
     }])
+    /*
+        Define controllers
+        Each controller has it's own scope
+        Scopes are used to transfer models data to templates
+    */
     .controller('Main', function($scope){
         $scope.Breadcrumbs = [];
         $scope.$on('bc_route_changed', function(e, args) {
@@ -48,33 +63,61 @@ angular
     .controller('Info', function($scope){
 
     })
-    .controller('Details', function($scope){
+    /*
+        Persons Controller
+    */
+    .controller('Details', function($scope, $http){
         $scope.Persons = [];
         $scope.ErrorMessage = '';
 
+        /*
+            Add new person to server and to local array
+        */
         $scope.add = function(vorname, nachname){
-            if(!vorname) return $scope.ErrorMessage = 'Enter a "vorname", please!';
+            if(!vorname) 
+                return $scope.ErrorMessage = 'Enter a "vorname", please!';
             
-            $scope.Persons.push(Person(vorname, nachname));
-            $scope.ErrorMessage = '';
+            var newPerson = Person(vorname, nachname);
+            var personId = vorname + '_' + nachname;
+            newPerson.id = personId;
+
+            // add to server storage
+            $http.post('/persons', newPerson)
+            .success(function(data) {
+                $scope.Persons.push(newPerson);
+            }).error(function(err) {
+                console.log(err);
+            });
         };
-        $scope.changed = function(person){
-            console.log(person);
+        /*
+            Fetch all persons from server
+        */
+        $scope.sync = function() {
+            $scope.Persons = [];
+            // get all from server storage
+            $http.get('/persons').success(function(data) {
+                for (var i = data.length - 1; i >= 0; i--) {
+                    $scope.Persons.push(data[i]);
+                };
+            });
         };
+        /*
+            Remove single person object from server and local array
+        */
         $scope.remove = function(person){
-            var idx = $scope.Persons.indexOf(person);
-            $scope.Persons.splice(idx, 1);
+            // remove from server storage
+            $http.delete('/persons/' + person.id)
+            .success(function(data) {
+                var idx = $scope.Persons.indexOf(person);
+                $scope.Persons.splice(idx, 1);
+            }).error(function(err) {
+                console.log(err);
+            });
         };
-
-        $scope.showPersons = function(){
-            alert(JSON.stringify($scope.Persons));
-        };
-
-        $scope.add('Max', 'Mustermann 01');
-        $scope.add('Max', 'Mustermann 02');
-        $scope.add('Max', 'Mustermann 03');
-
     })
+    /*
+        Events
+    */
     .run(function($rootScope) {
         $rootScope.$on('$routeChangeStart', function(e, args) {
             console.log(args);
