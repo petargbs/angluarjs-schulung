@@ -9,6 +9,10 @@
 	<body>
 		<div data-ng-view style="border: 1px solid cyan"></div>
 		<div data-ng-controller="Main">
+			<p style="border: 1px solid black">
+				History: <span data-ng-repeat="b in Breadcrumbs">&gt; {{b.link}} </span>
+			</p>
+
 			<input type="text" data-ng-model="Vorname">
 			<input type="text" data-ng-model="Nachname">
 			<button data-ng-click="add(Vorname, Nachname)">Add</button>

@@ -31,12 +31,18 @@ angular
        $locationProvider.html5Mode(false);
     }])
     .controller('Main', function($scope){
-        $scope.$on('helloworld', function(e, args) {
-            console.log(args);
-        });
-
+        $scope.Breadcrumbs = [];
         $scope.Persons = [];
         $scope.ErrorMessage = '';
+
+        $scope.$on('bc_route_changed', function(e, args) {
+            if (!args.args)
+                return;
+            var n = args.args !== '/' ? args.args.replace(/\//,'') : args.args;
+            $scope.Breadcrumbs.push({
+                'link': n
+            });
+        });
 
         $scope.add = function(vorname, nachname){
             if(!vorname) return $scope.ErrorMessage = 'Enter a "vorname", please!';
@@ -69,6 +75,9 @@ angular
     })
     .run(function($rootScope) {
         $rootScope.$on('$routeChangeStart', function(e, args) {
-            $rootScope.$broadcast('helloworld', {foo: 'bar', args: args});
+            // console.log(args);
+            $rootScope.$broadcast('bc_route_changed', { 
+                args: args.$$route.originalPath
+            });
         });
     });
