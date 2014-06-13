@@ -9,6 +9,10 @@ angular
 	.module('myApp', ['ngRoute'])
 	.config(['$routeProvider','$locationProvider',function($routeProvider, $locationProvider) {
         $routeProvider
+            .when('/', {
+                templateUrl: 'templates/info.html',
+                controller: 'Main'
+            })
             .when('/info', {
                 templateUrl: 'templates/info.html',
                 controller: 'Info'
