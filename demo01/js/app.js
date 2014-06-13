@@ -33,8 +33,10 @@ myApp
         };
         $scope.rename = function(person, vorname, nachname) {
             var idx = $scope.Persons.indexOf(person);
-            $scope.Persons[idx].vorname = vorname;
-            $scope.Persons[idx].nachname = nachname;
+            if (idx > 0) {
+                $scope.Persons[idx].vorname = vorname;
+                $scope.Persons[idx].nachname = nachname;
+            }
         };
 
         $scope.add('Aeryn', 'Sun');
