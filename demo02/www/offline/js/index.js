@@ -22,7 +22,7 @@ var cacheUpdate = function(){
 	});
 };
 
-loadData('demodata', function(error, data){
+loadData('videos', function(error, data){
 	console.log(data);
 });
 
