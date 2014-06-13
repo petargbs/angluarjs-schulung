@@ -10,6 +10,7 @@ angular
 	.config(['$routeProvider','$locationProvider',function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/', {
+            	// default route
             	redirectTo: '/welcome'
             })
             .when('/welcome', {
